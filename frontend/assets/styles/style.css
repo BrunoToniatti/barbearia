@@ -1,0 +1,127 @@
+/* Estilo geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 20px;
+    display: flex;
+    height: 90vh;
+    gap: 20px;
+}
+
+main {
+    width: 70%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#grafico {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+aside {
+    width: 20%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+aside h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+aside nav a{
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f4f7fc;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+aside nav .select{
+    background-color: #007BFF !important;
+    color: #fff !important;
+}
+
+aside nav a:hover {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+aside nav a i {
+    font-size: 1.2rem;
+}
+
+#dados-container{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+#dados-container .dados-item{
+    /* border: 1px solid; */
+    padding: 10px;
+    width: 200px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dados-item .titulo{
+    color: #007BFF;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    aside {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    main {
+        width: 100%;
+    }
+}

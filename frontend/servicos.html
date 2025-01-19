@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços Atendidos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <aside>
+        <h2>Navegação</h2>
+        <nav>
+            <a href="servicos.html" class="select"><i class="fas fa-chart-bar"></i> Relatório de Serviços</a>
+            <a href="barbeiros.html"><i class="fas fa-users"></i> Relatório de Profissionais</a>
+            <a href="datas.html"><i class="fas fa-wallet"></i> Relatório Financeiro</a>
+        </nav>
+    </aside>
+    <main>
+        <h1>Atendimentos por Serviço</h1>
+        <div id="grafico">
+            <canvas id="grafico-servicos"></canvas>
+        </div>
+        <div id="dados-container">
+        </div>
+    </main>
+    <script>    
+        function obterDados() {
+            fetch('http://127.0.0.1:5000/api/servicos')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);  
+                    
+                    const servicos = [];
+                    const quantidade = [];
+                    
+                    data.forEach(servico => {
+                        servicos.push(servico.Servico);  
+                        quantidade.push(servico.Quantidade);  
+
+                        const dadosItem = document.createElement("div");
+                        dadosItem.classList.add("dados-item");
+
+                        const titulo = document.createElement("div");
+                        titulo.classList.add("titulo");
+                        titulo.textContent = servico.Servico;
+
+                        const quantidadeTexto = document.createElement("div");
+                        quantidadeTexto.classList.add("quantidade");
+                        quantidadeTexto.textContent = servico.Quantidade;
+
+                        dadosItem.appendChild(titulo);
+                        dadosItem.appendChild(quantidadeTexto);
+                        document.getElementById("dados-container").appendChild(dadosItem);
+                    });
+
+                    criarGrafico(servicos, quantidade);
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar usuários:", error);
+                });
+        }
+
+        function criarGrafico(servicos, quantidade) {
+            const ctx = document.getElementById('grafico-servicos').getContext('2d');
+            const config = {
+                type: 'bar',
+                data: {
+                    labels: servicos,
+                    datasets: [{
+                        label: 'Serviços',
+                        data: quantidade,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            new Chart(ctx, config);
+        }
+
+        window.onload = function() {
+            obterDados();
+        };
+    </script>
+
+</body>
+</html>
