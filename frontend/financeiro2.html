@@ -19,8 +19,19 @@
     </aside>
     <main>
         <h1>Ganhos Anual</h1>
-        <div id="grafico">
-            <canvas id="grafico-info"></canvas>
+        <table id="tabela-relatorio">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- As linhas serão inseridas aqui -->
+            </tbody>
+        </table>
+        <div class="footer">
+            <a href="financeiro.html">Ver Gráfico</a>
         </div>
     </main>
     <script>
@@ -30,60 +41,30 @@
                 .then(data => {
                     console.log(data);  
                     
-                    const datas = [];
-                    const valor = [];
-                    
-                    data.forEach(data => {
-                        datas.push(data.Data);  
-                        valor.push(data.Valor);  
+                    const tabela = document.getElementById('tabela-relatorio').getElementsByTagName('tbody')[0];
 
-                        const dadosItem = document.createElement("div");
-                        dadosItem.classList.add("dados-item");
+                    data.forEach(item => {
+                        const novaLinha = tabela.insertRow();
 
-                        const titulo = document.createElement("div");
-                        titulo.classList.add("titulo");
-                        titulo.textContent = data.Data;
+                        const celulaData = novaLinha.insertCell(0);
+                        celulaData.textContent = item.Data;
 
-                        const quantidadeTexto = document.createElement("div");
-                        quantidadeTexto.classList.add("quantidade");
-                        quantidadeTexto.textContent = data.Valor;
-
-                        dadosItem.appendChild(titulo);
-                        dadosItem.appendChild(quantidadeTexto);
-                        
+                        const celulaValor = novaLinha.insertCell(1);
+                        celulaValor.textContent = formatarValorReal(item.Valor);
                     });
-
-                    criarGrafico(datas, valor);
                 })
                 .catch(error => {
-                    console.error("Erro ao buscar usuários:", error);
+                    console.error("Erro ao buscar dados:", error);
                 });
         }
 
-        function criarGrafico(servicos, quantidade) {
-            const ctx = document.getElementById('grafico-info').getContext('2d');
-            const config = {
-                type: 'line',
-                data: {
-                    labels: servicos,
-                    datasets: [{
-                        label: 'Serviços',
-                        data: quantidade,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            };
-            new Chart(ctx, config);
+        function formatarValorReal(valor) {
+            // Limita a 2 casas decimais
+            const valorFormatado = parseFloat(valor).toFixed(2);
+
+            // Adiciona ponto como separador de milhar e vírgula como separador decimal
+            const valorComMilhar = valorFormatado.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return `R$ ${valorComMilhar.replace('.', ',').replace(',','.')}`;
         }
 
         window.onload = function() {
