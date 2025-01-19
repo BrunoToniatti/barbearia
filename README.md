@@ -23,3 +23,24 @@ Bem-vindo ao repositório do **Controle de Barbearia**! Este sistema tem como ob
 1. Clone o repositório:
    ```bash
    git clone https://github.com/BrunoToniatti/barbearia
+
+2. Instale as depedências
+   ```bash
+   pip install -r requirements.txt
+
+3. Configure a sua conexão para o banco de dados no arquivo *database.py*
+
+## Como utilizar
+
+1. Inicie o servidor Flask
+   ```bash
+   python app.py
+
+2. Subir os dados pelo ETL
+   - Acesse a página etl.html
+   - Suba o arquivo clientes_atendidos.txt
+   **Normalmente este processo de subir os dados pode levar tempo, são 5.000 linhas**
+
+3. Acessar os relatórios
+   - Automáticamente já irá subir os dados para o banco
+   - E você pode acessar os relatórios
